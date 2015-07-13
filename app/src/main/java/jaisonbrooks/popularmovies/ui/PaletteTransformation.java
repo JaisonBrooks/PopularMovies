@@ -1,5 +1,10 @@
 package jaisonbrooks.popularmovies.ui;
 
+/**
+ * Original Source : https://gist.github.com/imminent/d35ad752f657bc695722
+ * Author : imminent
+ */
+
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.annotation.NonNull;
