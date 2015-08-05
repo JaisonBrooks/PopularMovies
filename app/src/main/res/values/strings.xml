@@ -18,6 +18,20 @@
         <item>vote_count.desc</item>
         <item>vote_average.desc</item>
     </string-array>
+
+    <string-array name="sort_option_labels">
+        <item>Most Popular</item>
+        <item>Top Rated</item>
+        <item>My Favorites</item>
+    </string-array>
+
+    <string-array name="sort_option_values">
+        <item>popularity.desc</item>
+        <item>vote_count.desc</item>
+        <item>vote_average.desc</item>
+    </string-array>
+
+
     <string name="pref_sort_option_default">popularity.desc</string>
     <string name="detail_card_rating_label">Rating</string>
     <string name="detail_card_overview_label">Overview</string>

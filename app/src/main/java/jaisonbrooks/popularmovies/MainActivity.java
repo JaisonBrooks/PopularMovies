@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,7 +13,13 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 import jaisonbrooks.popularmovies.adapter.PopularMoviesAdapter;
@@ -36,6 +43,32 @@ public class MainActivity extends AppCompatActivity implements OnPopularMovie {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+                R.array.sort_option_labels, R.layout.dropdown_title);
+        adapter.setDropDownViewResource(R.layout.dropdown_list);
+
+        final String[] arrays = getResources().getStringArray(R.array.sort_option_values);
+
+        Spinner mNavigationSpinner = new Spinner(getSupportActionBar().getThemedContext());
+        mNavigationSpinner.setAdapter(adapter);
+        mNavigationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Snackbar.make(findViewById(android.R.id.content), "On Item Selected: " + position, Snackbar.LENGTH_SHORT).show();
+                
+                new ExploreMovies(MainActivity.this).execute(arrays[position]);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                Snackbar.make(findViewById(android.R.id.content), "Nothing was Selected", Snackbar.LENGTH_SHORT).show();
+            }
+        });
+        toolbar.addView(mNavigationSpinner);
+
+        //getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         if (savedInstanceState == null || !savedInstanceState.containsKey(OBJ_KEY)) {
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -79,11 +112,11 @@ public class MainActivity extends AppCompatActivity implements OnPopularMovie {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
-            startActivityForResult(settings, RESULT_OK);
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//            Intent settings = new Intent(MainActivity.this, SettingsActivity.class);
+//            startActivityForResult(settings, RESULT_OK);
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
